@@ -1,4 +1,5 @@
-const reverse = require('../utils/for_testing.js').reverse;
+import { test, expect } from 'vitest';
+import { reverse } from '../utils/for_testing.js';
 
 test('reverse of a', () => {
   const result = reverse('a');

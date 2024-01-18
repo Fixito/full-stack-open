@@ -1,5 +1,11 @@
 import { test, expect, describe } from 'vitest';
-import { dummy, favoriteBlog, totalLikes } from '../utils/list_helper.js';
+import {
+  dummy,
+  favoriteBlog,
+  mostBlogs,
+  mostLikes,
+  totalLikes,
+} from '../utils/list_helper.js';
 
 const blogs = [
   {
@@ -99,6 +105,26 @@ describe('favorite blogs', () => {
       url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
       likes: 12,
       __v: 0,
+    });
+  });
+});
+
+describe('most blogs', () => {
+  test('of all authors, correctly identifies the one with the most blogs', () => {
+    const result = mostBlogs(blogs);
+    expect(result).toEqual({
+      author: 'Robert C. Martin',
+      blogs: 3,
+    });
+  });
+});
+
+describe('most likes', () => {
+  test('of all authors, correctly identifies the one with the most accumulated likes', () => {
+    const result = mostLikes(blogs);
+    expect(result).toEqual({
+      author: 'Edsger W. Dijkstra',
+      likes: 17,
     });
   });
 });

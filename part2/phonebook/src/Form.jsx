@@ -7,7 +7,7 @@ const Form = ({ persons, addPerson, updatePersonNumber }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!newName.trim() || !newNumber.trim()) {
+    if (!newName.trim() || !newNumber) {
       alert('Please provide a unique name and a phone number');
       return;
     }
@@ -55,7 +55,7 @@ const Form = ({ persons, addPerson, updatePersonNumber }) => {
             name='phone'
             id='phone'
             value={newNumber}
-            onChange={(e) => setNewNumber(e.target.value)}
+            onChange={(e) => setNewNumber(e.target.value.trim())}
           />
         </label>
       </div>

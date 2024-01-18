@@ -22,13 +22,12 @@ const App = () => {
 
   const addPerson = ({ newName, newNumber }) => {
     const newPerson = {
-      id: Date.now().toString(),
       name: newName,
       number: newNumber
     };
     personService
       .create(newPerson)
-      .then(() => {
+      .then((newPerson) => {
         setPersons((prevPersons) => {
           return [...prevPersons, newPerson];
         });
@@ -36,6 +35,7 @@ const App = () => {
       })
       .catch((error) => {
         console.error(error);
+        notify({ text: error.response.data.error, type: 'error' });
       });
   };
 
@@ -61,6 +61,8 @@ const App = () => {
           });
           setPersons(persons.filter((p) => p.id !== person.id));
         }
+
+        notify({ text: error.response.data.error, type: 'error' });
       });
   };
 

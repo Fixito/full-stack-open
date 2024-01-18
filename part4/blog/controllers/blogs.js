@@ -1,16 +1,15 @@
-const Blog = require('../models/blog.js');
-const getAllBlogs = (request, response) => {
+import Blog from '../models/blog.js';
+
+export const getAllBlogs = (request, response) => {
   Blog.find({}).then((blogs) => {
     response.json(blogs);
   });
 };
 
-const createBlog = (request, response) => {
+export const createBlog = (request, response) => {
   const blog = new Blog(request.body);
 
   blog.save().then((result) => {
     response.status(201).json(result);
   });
 };
-
-module.exports = { getAllBlogs, createBlog };

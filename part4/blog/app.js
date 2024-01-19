@@ -1,10 +1,11 @@
+import 'express-async-errors';
 import express from 'express';
 const app = express();
 import { connect } from 'mongoose';
 import cors from 'cors';
 import * as logger from './utils/logger.js';
 import { MONGODB_URI } from './utils/config.js';
-import { unkownEndpoint, errorhandler } from './utils/utils.js';
+import { unkownEndpoint, errorhandler } from './utils/middleware.js';
 
 import blogsRouter from './routes/blogs.js';
 

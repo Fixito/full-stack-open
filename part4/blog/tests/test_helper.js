@@ -1,4 +1,5 @@
 import Blog from '../models/blog.js';
+import User from '../models/user.js';
 
 export const initialBlogs = [
   {
@@ -21,9 +22,14 @@ export const blogsInDb = async () => {
 };
 
 export const nonExistingId = async () => {
-  const note = new Blog({ title: 'non existing id' });
-  await note.save();
-  await note.remove();
+  const blog = new Blog({ title: 'non existing id' });
+  await blog.save();
+  await blog.deleteOne();
 
-  return note._id.toString();
+  return blog._id.toString();
+};
+
+export const usersInDb = async () => {
+  const users = await User.find({});
+  return users.map((u) => u.toJSON());
 };

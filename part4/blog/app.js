@@ -1,6 +1,7 @@
 import 'express-async-errors';
 import express from 'express';
 const app = express();
+import morgan from 'morgan';
 import { connect } from 'mongoose';
 import cors from 'cors';
 import * as logger from './utils/logger.js';
@@ -23,6 +24,7 @@ connect(MONGODB_URI)
     logger.error('Error connecting to MongoDB:', error.message);
   });
 
+app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
 

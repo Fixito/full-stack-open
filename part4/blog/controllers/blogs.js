@@ -35,7 +35,7 @@ export const updateBlog = async (request, response) => {
 
   const updatedBlog = await Blog.findByIdAndUpdate(id, request.body, {
     new: true,
-  });
+  }).populate('user');
   response.status(200).json(updatedBlog);
 };
 
@@ -47,9 +47,6 @@ export const deleteBlog = async (request, response) => {
   if (!existingBlog) {
     return response.status(404).json({ error: `No blog with id ${id}` });
   }
-
-  console.log(existingBlog);
-  console.log(request.user);
 
   if (existingBlog.user._id.toString() !== request.user.id.toString()) {
     return response.status(404).json({ error: `Permission denied` });

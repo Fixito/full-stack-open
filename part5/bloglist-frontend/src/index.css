@@ -4,6 +4,29 @@ body {
   line-height: 1.5;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 500;
+  line-height: 1.1;
+  text-wrap: balance;
+  margin-bottom: 1.38rem;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+.flow > * + * {
+  margin-top: var(--flow-space, 1em);
+}
+
 .notification {
   padding: 1rem;
   font-weight: 500;
@@ -17,4 +40,25 @@ body {
 .danger {
   background-color: hsl(0, 86%, 97%);
   color: hsl(0, 74%, 42%);
+}
+
+.bloglist {
+  padding-block: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.blog {
+  padding: 1rem 1.5rem;
+  border: 1px solid gray;
+}
+
+.blog h4 {
+  margin-block-start: 0;
+}
+
+.delete-btn {
+  color: darkred;
+  border: none;
+  background-color: transparent;
 }

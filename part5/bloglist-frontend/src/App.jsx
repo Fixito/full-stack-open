@@ -3,13 +3,15 @@ import Blog from './components/Blog';
 import blogService from './services/blogs';
 import loginService from './services/login.js';
 import LoginForm from './components/LoginForm.jsx';
-import NoteForm from './components/NoteForm.jsx';
+import BlogForm from './components/BlogForm.jsx';
 import Notification from './components/Notification.jsx';
+import Togglable from './components/Togglable.jsx';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState(null);
+  const sortedBlogs = blogs.toSorted((a, b) => b.likes - a.likes);
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -37,7 +39,6 @@ const App = () => {
       setUser(user);
       blogService.setToken(user.token);
       localStorage.setItem('loggedBlogAppUser', JSON.stringify(user));
-      notify({ type: 'success', text: 'Logged in' });
     } catch (error) {
       notify({ type: 'danger', text: error.response.data.error });
     }
@@ -64,21 +65,27 @@ const App = () => {
   return (
     <main>
       <h1>Blogs</h1>
-
       {message && <Notification {...message} />}
       {!user && <LoginForm login={handleLogin} />}
       {user && (
-        <>
+        <div className='flow'>
           <p>
             {user.name} logged in <button onClick={handleLogout}>Logout</button>
           </p>
-          <NoteForm addBlog={addBlog} />
-          <div>
-            {blogs.map((blog) => (
-              <Blog key={blog.id} blog={blog} />
+          <Togglable buttonLabel='Create new blog'>
+            <BlogForm addBlog={addBlog} />
+          </Togglable>
+          <section className='bloglist'>
+            {sortedBlogs.map((blog) => (
+              <Blog
+                key={blog.id}
+                blog={blog}
+                notify={notify}
+                setBlogs={setBlogs}
+              />
             ))}
-          </div>
-        </>
+          </section>
+        </div>
       )}
     </main>
   );

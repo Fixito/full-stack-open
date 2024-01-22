@@ -12,21 +12,11 @@ const LoginForm = ({ login }) => {
       <h2>Log in to application</h2>
       <div>
         <label htmlFor='username'>Username</label>{' '}
-        <input
-          type='text'
-          name='username'
-          id='username'
-          defaultValue='Superuser'
-        />
+        <input type='text' name='username' id='username' />
       </div>
       <div>
         <label htmlFor='password'>Password</label>{' '}
-        <input
-          type='text'
-          name='password'
-          id='password'
-          defaultValue='secret123'
-        />
+        <input type='text' name='password' id='password' />
       </div>
       <button>Login</button>
     </form>

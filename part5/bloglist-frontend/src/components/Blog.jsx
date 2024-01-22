@@ -3,7 +3,7 @@ import blogService from '../services/blogs.js';
 
 const Blog = ({ blog, notify, setBlogs }) => {
   const { id, title, author, url, likes, user } = blog;
-  const [isShown, setIsShown] = useState(true);
+  const [isShown, setIsShown] = useState(false);
 
   const removeBlog = async () => {
     const isBlogDeleted = confirm(`Remove blog ${title} by ${author}?`);

@@ -12,15 +12,15 @@ const NoteForm = ({ addBlog }) => {
       <h2>Create new</h2>
       <div>
         <label htmlFor='title'>Title: </label>
-        <input type='text' name='title' id='title' defaultValue='Test Post' />
+        <input type='text' name='title' id='title' />
       </div>
       <div>
         <label htmlFor='author'>Author: </label>
-        <input type='text' name='author' id='author' defaultValue='John Doe' />
+        <input type='text' name='author' id='author' />
       </div>
       <div>
         <label htmlFor='url'>URL: </label>
-        <input type='text' name='url' id='url' defaultValue='test-post' />
+        <input type='text' name='url' id='url' />
       </div>
       <button>Create</button>
     </form>

@@ -76,14 +76,17 @@ const App = () => {
             <BlogForm addBlog={addBlog} />
           </Togglable>
           <section className='bloglist'>
-            {sortedBlogs.map((blog) => (
-              <Blog
-                key={blog.id}
-                blog={blog}
-                notify={notify}
-                setBlogs={setBlogs}
-              />
-            ))}
+            {sortedBlogs.map((blog) => {
+              return (
+                <Blog
+                  key={blog.id}
+                  blog={blog}
+                  notify={notify}
+                  setBlogs={setBlogs}
+                  user={user}
+                />
+              );
+            })}
           </section>
         </div>
       )}

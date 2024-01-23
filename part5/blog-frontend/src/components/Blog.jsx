@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import blogService from '../services/blogs.js';
 
-const Blog = ({ blog, notify, setBlogs }) => {
-  const { id, title, author, url, likes, user } = blog;
+const Blog = ({ blog, notify, setBlogs, user }) => {
+  const { id, title, author, url, likes, user: owner } = blog;
   const [isShown, setIsShown] = useState(false);
 
   const removeBlog = async () => {
@@ -38,7 +38,7 @@ const Blog = ({ blog, notify, setBlogs }) => {
   };
 
   return (
-    <article className='flow blog'>
+    <article className='flow blog' data-testid='blog'>
       <div>
         {title} - <span>{author}</span>{' '}
         <button onClick={() => setIsShown(!isShown)}>
@@ -52,12 +52,14 @@ const Blog = ({ blog, notify, setBlogs }) => {
             {likes} like{likes > 1 ? 's' : ''}{' '}
             <button onClick={toggleLike}>Like</button>
           </p>
-          <p>{user.name}</p>
+          <p>{owner.name}</p>
         </>
       ) : null}
-      <button className='delete-btn' onClick={removeBlog}>
-        Remove
-      </button>
+      {(user.id === owner.id || user.id === owner) && (
+        <button className='delete-btn' onClick={removeBlog}>
+          Remove
+        </button>
+      )}
     </article>
   );
 };

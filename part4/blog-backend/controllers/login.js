@@ -26,5 +26,5 @@ export const login = async (request, response) => {
 
   response
     .status(200)
-    .json({ token, username: user.username, name: user.name });
+    .json({ token, username: user.username, name: user.name, id: user.id });
 };

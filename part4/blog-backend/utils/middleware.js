@@ -1,7 +1,7 @@
 import * as logger from './logger.js';
 import jwt from 'jsonwebtoken';
 
-export const unkownEndpoint = (_req, res) =>
+export const unknownEndpoint = (_req, res) =>
   res.status(404).json({ error: "Endpoint doesn't exist..." });
 
 export const errorhandler = (err, _req, res, _next) => {

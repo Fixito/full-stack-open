@@ -7,7 +7,7 @@ import cors from 'cors';
 import * as logger from './utils/logger.js';
 import { MONGODB_URI } from './utils/config.js';
 import {
-  unkownEndpoint,
+  unknownEndpoint,
   errorhandler,
   tokenExtractor,
 } from './utils/middleware.js';
@@ -15,6 +15,15 @@ import {
 import blogsRouter from './routes/blogs.js';
 import usersRouter from './routes/users.js';
 import loginRouter from './routes/login.js';
+
+if (process.env.NODE_ENV === 'test') {
+  try {
+    const { default: testingRouter } = await import('./routes/testing.js');
+    app.use('/api/testing', testingRouter);
+  } catch (error) {
+    logger.error('Error loading testing router:', error);
+  }
+}
 
 connect(MONGODB_URI)
   .then(() => {
@@ -33,7 +42,7 @@ app.use('/api/blogs', blogsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/login', loginRouter);
 
-app.use(unkownEndpoint);
+app.use(unknownEndpoint);
 app.use(errorhandler);
 
 export default app;

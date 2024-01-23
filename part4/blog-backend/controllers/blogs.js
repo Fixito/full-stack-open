@@ -15,7 +15,12 @@ export const createBlog = async (request, response) => {
 
   const user = await User.findById(request.user.id);
 
-  const blog = new Blog({ author, title, url, user: user.id });
+  const blog = new Blog({
+    author,
+    title,
+    url,
+    user: user.id,
+  });
 
   const savedBlog = await blog.save();
   user.blogs = user.blogs.concat(savedBlog._id);

@@ -1,10 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { createAnecdote, voteForAnecdote } from './features/anecdoteSlice.js';
+import {
+  createAnecdote,
+  initializeAnecdotes,
+  updateAnecdote,
+} from './features/anecdoteSlice.js';
 import AnecdoteForm from './components/AnecdoteForm.jsx';
 import AnecdoteList from './components/AnecdoteList.jsx';
 import Filter from './components/Filter.jsx';
 import Notification from './components/Notification.jsx';
 import { setNotification } from './features/notificationSlice.js';
+import { useEffect } from 'react';
 
 const App = () => {
   const anecdotes = useSelector((state) => {
@@ -17,15 +22,19 @@ const App = () => {
   const dispatch = useDispatch();
   const sortedAnecdotes = anecdotes.toSorted((a, b) => b.votes - a.votes);
 
-  const vote = ({ id, content }) => {
-    dispatch(setNotification(`you voted '${content}'`));
-    dispatch(voteForAnecdote(id));
+  const vote = (anecdote) => {
+    dispatch(setNotification(`you voted '${anecdote.content}'`));
+    dispatch(updateAnecdote(anecdote));
   };
 
-  const addAnecdote = (anecdote) => {
+  const addAnecdote = async (anecdote) => {
     dispatch(createAnecdote(anecdote));
     dispatch(setNotification(`anecdote added`));
   };
+
+  useEffect(() => {
+    dispatch(initializeAnecdotes());
+  }, [dispatch]);
 
   return (
     <div>
@@ -33,7 +42,7 @@ const App = () => {
       <Notification />
       <Filter />
       <AnecdoteList anecdotes={sortedAnecdotes} vote={vote} />
-      <AnecdoteForm onSubmit={addAnecdote} />
+      <AnecdoteForm addAnecdote={addAnecdote} />
     </div>
   );
 };

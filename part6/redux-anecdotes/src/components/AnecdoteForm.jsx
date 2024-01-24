@@ -1,9 +1,9 @@
-const AnecdoteForm = ({ onSubmit }) => {
+const AnecdoteForm = ({ addAnecdote }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const anecdote = formData.get('anecdote');
-    onSubmit(anecdote);
+    addAnecdote(anecdote);
     e.target.reset();
   };
 

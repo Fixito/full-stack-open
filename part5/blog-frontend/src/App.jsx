@@ -6,12 +6,17 @@ import LoginForm from './components/LoginForm.jsx';
 import BlogForm from './components/BlogForm.jsx';
 import Notification from './components/Notification.jsx';
 import Togglable from './components/Togglable.jsx';
+import {
+  useNotifcationDispatch,
+  useNotificationValue,
+} from './components/NotificationContext.jsx';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
-  const [message, setMessage] = useState(null);
   const sortedBlogs = blogs.toSorted((a, b) => b.likes - a.likes);
+  const notification = useNotificationValue();
+  const notificationDispatch = useNotifcationDispatch();
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -26,13 +31,6 @@ const App = () => {
     }
   }, []);
 
-  const notify = ({ text, type }) => {
-    setMessage({ text, type });
-    setTimeout(() => {
-      setMessage({ text: '', type: '' });
-    }, 3000);
-  };
-
   const handleLogin = async (userInputs) => {
     try {
       const user = await loginService.login(userInputs);
@@ -40,7 +38,13 @@ const App = () => {
       blogService.setToken(user.token);
       localStorage.setItem('loggedBlogAppUser', JSON.stringify(user));
     } catch (error) {
-      notify({ type: 'danger', text: error.response.data.error });
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: {
+          type: 'danger',
+          text: error.response.data.error,
+        },
+      });
     }
   };
 
@@ -53,19 +57,25 @@ const App = () => {
     try {
       const addedBlog = await blogService.create(blogInputs);
       setBlogs([...blogs, addedBlog]);
-      notify({
-        type: 'success',
-        text: `A new blog "${addedBlog.title}" added`,
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: {
+          type: 'success',
+          text: `A new blog "${addedBlog.title}" added`,
+        },
       });
     } catch (error) {
-      notify({ type: 'danger', text: error.response.data.error });
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: { type: 'danger', text: error.response.data.error },
+      });
     }
   };
 
   return (
     <main>
       <h1>Blogs</h1>
-      {message && <Notification {...message} />}
+      {notification && <Notification />}
       {!user && <LoginForm login={handleLogin} />}
       {user && (
         <div className='flow'>
@@ -81,7 +91,6 @@ const App = () => {
                 <Blog
                   key={blog.id}
                   blog={blog}
-                  notify={notify}
                   setBlogs={setBlogs}
                   user={user}
                 />

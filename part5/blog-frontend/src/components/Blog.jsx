@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import blogService from '../services/blogs.js';
+import { useNotifcationDispatch } from './NotificationContext.jsx';
 
-const Blog = ({ blog, notify, setBlogs, user }) => {
+const Blog = ({ blog, setBlogs, user }) => {
   const { id, title, author, url, likes, user: owner } = blog;
   const [isShown, setIsShown] = useState(false);
+  const notificationDispatch = useNotifcationDispatch();
 
   const removeBlog = async () => {
     const isBlogDeleted = confirm(`Remove blog ${title} by ${author}?`);
@@ -14,12 +16,22 @@ const Blog = ({ blog, notify, setBlogs, user }) => {
         setBlogs((blogs) => {
           return blogs.filter((blog) => blog.id !== id);
         });
-        notify({
-          type: 'success',
-          text: `Blog "${title}" deleted`,
+        notificationDispatch({
+          type: 'SET_NOTIFICATION',
+          payload: {
+            type: 'success',
+            text: `Blog "${title}" deleted`,
+          },
         });
       } catch (error) {
-        notify({ type: 'danger', text: error.response.data.error });
+        console.log(error);
+        notificationDispatch({
+          type: 'SET_NOTIFICATION',
+          payload: {
+            type: 'danger',
+            text: error.response.data.error,
+          },
+        });
       }
     }
   };

@@ -4,21 +4,34 @@ const LoginForm = ({ login }) => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     login(data);
-    e.target.reset();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Log in to application</h2>
-      <div>
-        <label htmlFor='username'>Username</label>{' '}
-        <input type='text' name='username' id='username' />
-      </div>
-      <div>
-        <label htmlFor='password'>Password</label>{' '}
-        <input type='password' name='password' id='password' />
-      </div>
-      <button>Login</button>
+    <form onSubmit={handleSubmit} className="mx-auto max-w-sm">
+      <h2 className="text-2xl">Log in to application</h2>
+      <label htmlFor="username" className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text">Username</span>
+        </div>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          className="input input-bordered input-sm w-full max-w-xs"
+        />
+      </label>
+      <label htmlFor="password" className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text">Password</span>
+        </div>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          className="input input-bordered input-sm w-full max-w-xs"
+        />
+      </label>
+      <button className="btn btn-primary mt-4">Login</button>
     </form>
   );
 };

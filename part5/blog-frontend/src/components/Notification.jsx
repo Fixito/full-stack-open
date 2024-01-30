@@ -1,18 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import {
   useNotificationValue,
   useNotifcationDispatch,
-} from './NotificationContext.jsx';
+} from "./NotificationContext.jsx";
 
 const Notification = () => {
   const { type, text } = useNotificationValue();
   const notificationDispatch = useNotifcationDispatch();
 
+  console.log(type);
+  const typeToClass = {
+    success: "alert-success",
+    error: "alert-error",
+  };
+
+  const alertClass = typeToClass[type] || "bg-blue-500";
+
   useEffect(() => {
     const id = setTimeout(() => {
       notificationDispatch({
-        type: 'SET_NOTIFICATION',
-        payload: { type: '', text: '' },
+        type: "SET_NOTIFICATION",
+        payload: { type: "", text: "" },
       });
     }, 3000);
 
@@ -21,7 +29,11 @@ const Notification = () => {
     };
   });
 
-  return <div className={`notification ${type}`}>{text}</div>;
+  return (
+    <div role="alert" className={`alert ${alertClass}`}>
+      {text}
+    </div>
+  );
 };
 
 export default Notification;

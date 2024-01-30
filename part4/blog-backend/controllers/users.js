@@ -41,3 +41,10 @@ export const getAllUsers = async (_request, response) => {
 
   response.status(200).json(users);
 };
+
+export const getSingleUser = async (request, response) => {
+  const { id } = request.params;
+  const user = await User.find({ id });
+
+  response.status(200).json(user);
+};

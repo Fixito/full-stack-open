@@ -9,20 +9,44 @@ const NoteForm = ({ addBlog }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Create new</h2>
-      <div>
-        <label htmlFor='title'>Title: </label>
-        <input type='text' name='title' id='title' />
-      </div>
-      <div>
-        <label htmlFor='author'>Author: </label>
-        <input type='text' name='author' id='author' />
-      </div>
-      <div>
-        <label htmlFor='url'>URL: </label>
-        <input type='text' name='url' id='url' />
-      </div>
-      <button>Create</button>
+      <h2 className="text-2xl">Create new</h2>
+      {/* title */}
+      <label htmlFor="title" className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text">Title:</span>
+        </div>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          className="input input-bordered input-sm w-full max-w-xs"
+        />
+      </label>
+      {/* author */}
+      <label htmlFor="author" className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text">Author:</span>
+        </div>
+        <input
+          type="text"
+          name="author"
+          id="author"
+          className="input input-bordered input-sm w-full max-w-xs"
+        />
+      </label>
+      {/* url */}
+      <label htmlFor="url" className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text">URL:</span>
+        </div>
+        <input
+          type="text"
+          name="url"
+          id="url"
+          className="input input-bordered input-sm w-full max-w-xs"
+        />
+      </label>
+      <button className="btn btn-primary mt-4">Create</button>
     </form>
   );
 };

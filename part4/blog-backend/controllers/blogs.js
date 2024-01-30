@@ -29,6 +29,18 @@ export const createBlog = async (request, response) => {
   response.status(201).json(savedBlog);
 };
 
+export const getSingleBlog = async (request, response) => {
+  const { id } = request.params;
+
+  const blog = await Blog.findById(id).populate('user');
+
+  if (!blog) {
+    return response.status(404).json({ error: `No blog with id ${id}` });
+  }
+
+  response.status(200).json(blog);
+};
+
 export const updateBlog = async (request, response) => {
   const { id } = request.params;
 

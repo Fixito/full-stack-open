@@ -23,14 +23,23 @@ const create = async (newBlog) => {
   return data;
 };
 
-const update = async (blogId, updatedblog) => {
+const getsingle = async (blogId) => {
+  const { data } = await axios.get(`${baseUrl}/${blogId}`);
+  return data;
+};
+
+const update = async (updatedblog) => {
   const config = {
     headers: {
       authorization: token,
     },
   };
 
-  const { data } = await axios.put(`${baseUrl}/${blogId}`, updatedblog, config);
+  const { data } = await axios.put(
+    `${baseUrl}/${updatedblog.id}`,
+    updatedblog,
+    config
+  );
   return data;
 };
 
@@ -45,4 +54,4 @@ const remove = async (blogId) => {
   return data;
 };
 
-export default { getAll, create, update, remove, setToken };
+export default { getAll, create, getsingle, update, remove, setToken };

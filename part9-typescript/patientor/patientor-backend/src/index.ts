@@ -16,7 +16,9 @@ app.get('/api/ping', (_req, res) => {
 app.use('/api/diagnoses', diagnosesRouter);
 app.use('/api/patients', patientsRouter);
 
-const PORT = 3001;
+app.use((_res, res) => res.status(404).send("Endpoint doesn't exist..."));
+
+const PORT = 8000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

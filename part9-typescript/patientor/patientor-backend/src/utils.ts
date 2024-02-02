@@ -1,4 +1,4 @@
-import { Gender, newPatientEntry } from './types';
+import { Diagnosis, Gender, newPatientEntry } from './types';
 
 const isString = (text: unknown): text is string => {
   return typeof text === 'string' || text instanceof String;
@@ -56,10 +56,20 @@ export const toNewPatientEntry = (object: unknown): newPatientEntry => {
       dateOfBirth: parseDate(object.dateOfBirth),
       gender: parseGender(object.gender),
       occupation: parseText(object.occupation),
+      entries: [],
     };
 
     return newEntry;
   }
 
   throw new Error('Incorrect data: some fields are missing');
+};
+
+const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> => {
+  if (!object || typeof object !== 'object' || !('diagnosisCodes' in object)) {
+    // we will just trust the data to be in correct form
+    return [] as Array<Diagnosis['code']>;
+  }
+
+  return object.diagnosisCodes as Array<Diagnosis['code']>;
 };

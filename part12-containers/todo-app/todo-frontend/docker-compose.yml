@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    image: todo-front
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 80:80
+    container_name: todo-front
+    environment:
+      - NODE_ENV=production
